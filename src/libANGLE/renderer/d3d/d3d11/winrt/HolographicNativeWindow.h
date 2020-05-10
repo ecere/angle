@@ -6,21 +6,21 @@
 
 // HolographicNativeWindow.h: NativeWindow for managing windows based on Windows Holographic app views.
 //
-// This implementation uses the frame of reference provided by the app to render a stereo version of 
-// the scene. It can provide a view matrix midway between both eye positions of the holographic camera 
-// for the app to use, and in this case the app is expected to use a projection matrix that is the 
-// identity matrix (or no projection matrix at all). Internally to ANGLE, the stereo rendering will 
-// double the number of instances provided to the shader - which is hidden from the shader by halving 
-// the value set for gl_InstanceID - and apply the left and right view matrices to each eye, after 
+// This implementation uses the frame of reference provided by the app to render a stereo version of
+// the scene. It can provide a view matrix midway between both eye positions of the holographic camera
+// for the app to use, and in this case the app is expected to use a projection matrix that is the
+// identity matrix (or no projection matrix at all). Internally to ANGLE, the stereo rendering will
+// double the number of instances provided to the shader - which is hidden from the shader by halving
+// the value set for gl_InstanceID - and apply the left and right view matrices to each eye, after
 // undoing the midview matrix.
 //
-// Alternatively, the app can use its own instanced draw calls and access the holographic view/projection 
-// matrix provided by ANGLE by using odd and even instance IDs for left and right views. In this case, the 
+// Alternatively, the app can use its own instanced draw calls and access the holographic view/projection
+// matrix provided by ANGLE by using odd and even instance IDs for left and right views. In this case, the
 // shader program is not modified.
 //
-// This implementation can also use automatic depth-based image stabilization. This feature determines a 
-// best-fit plane for the scene geometry by processing geometry data from the depth buffer, and then sets 
-// the focus point and plane for Windows Holographic image stabilization. To take advantage of this 
+// This implementation can also use automatic depth-based image stabilization. This feature determines a
+// best-fit plane for the scene geometry by processing geometry data from the depth buffer, and then sets
+// the focus point and plane for Windows Holographic image stabilization. To take advantage of this
 // feature, make sure to apply the following rules when drawing content:
 //   * All information in the depth buffer should be for hologram geometry that is visible
 //     to the user.
@@ -82,7 +82,7 @@ class HolographicNativeWindow : public InspectableNativeWindow, public std::enab
                             DXGISwapChain **swapChain) override;
 
     static bool IsInitialized() { return mInitialized; }
-    
+
     void setRenderer11(Renderer11* renderer) { mRenderer = renderer; };
     HRESULT setD3DDevice(ID3D11Device *device);
 
@@ -104,9 +104,9 @@ class HolographicNativeWindow : public InspectableNativeWindow, public std::enab
     HRESULT GetHolographicCameraPose(UINT32 id, ABI::Windows::Graphics::Holographic::IHolographicCameraPose** outPose);
     ABI::Windows::Graphics::Holographic::IHolographicFrame* GetHolographicFrame() { return mHolographicFrame.Get(); };
     ABI::Windows::Perception::Spatial::ISpatialCoordinateSystem* GetCoordinateSystem() { return mCoordinateSystem.Get(); };
-    
+
     bool HasHolographicCameraListChanged()
-    { 
+    {
         bool holographicCameraListChangedReturnValue = false;
         UseHolographicCameraResources<void>(
             [&, this](std::map<UINT32, std::unique_ptr<HolographicSwapChain11>>& cameraResourceMap)
@@ -143,7 +143,7 @@ class HolographicNativeWindow : public InspectableNativeWindow, public std::enab
     ComPtr<ABI::Windows::Foundation::Collections::IVectorView<ABI::Windows::Graphics::Holographic::HolographicCameraPose*>> mHolographicCameraPoses;
     ComPtr<ABI::Windows::Graphics::Holographic::IHolographicFrame>  mHolographicFrame;
     ComPtr<ABI::Windows::Graphics::Holographic::IHolographicSpace>  mHolographicSpace;
-    
+
 
     ComPtr<ABI::Windows::Perception::Spatial::ISpatialCoordinateSystem> mCoordinateSystem;
 
@@ -190,7 +190,7 @@ class CameraAddedEventHandler :
     }
 
     // IHolographicSpaceCameraAddedEventArgs
-    IFACEMETHOD(Invoke)(ABI::Windows::Graphics::Holographic::IHolographicSpace *sender, 
+    IFACEMETHOD(Invoke)(ABI::Windows::Graphics::Holographic::IHolographicSpace *sender,
                         ABI::Windows::Graphics::Holographic::IHolographicSpaceCameraAddedEventArgs *cameraAddedEventArgs)
     {
         std::shared_ptr<HolographicNativeWindow> host = mHost.lock();

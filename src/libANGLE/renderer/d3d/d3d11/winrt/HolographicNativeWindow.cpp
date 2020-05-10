@@ -6,21 +6,21 @@
 
 // HolographicNativeWindow.cpp: NativeWindow for managing windows based on Windows Holographic app views.
 //
-// This implementation uses the frame of reference provided by the app to render a stereo version of 
-// the scene. It can provide a view matrix midway between both eye positions of the holographic camera 
-// for the app to use, and in this case the app is expected to use a projection matrix that is the 
-// identity matrix (or no projection matrix at all). Internally to ANGLE, the stereo rendering will 
-// double the number of instances provided to the shader - which is hidden from the shader by halving 
-// the value set for gl_InstanceID - and apply the left and right view matrices to each eye, after 
+// This implementation uses the frame of reference provided by the app to render a stereo version of
+// the scene. It can provide a view matrix midway between both eye positions of the holographic camera
+// for the app to use, and in this case the app is expected to use a projection matrix that is the
+// identity matrix (or no projection matrix at all). Internally to ANGLE, the stereo rendering will
+// double the number of instances provided to the shader - which is hidden from the shader by halving
+// the value set for gl_InstanceID - and apply the left and right view matrices to each eye, after
 // undoing the midview matrix.
 //
-// Alternatively, the app can use its own instanced draw calls and access the holographic view/projection 
-// matrix provided by ANGLE by using odd and even instance IDs for left and right views. In this case, the 
+// Alternatively, the app can use its own instanced draw calls and access the holographic view/projection
+// matrix provided by ANGLE by using odd and even instance IDs for left and right views. In this case, the
 // shader program is not modified.
 //
-// This implementation can also use automatic depth-based image stabilization. This feature determines a 
-// best-fit plane for the scene geometry by processing geometry data from the depth buffer, and then sets 
-// the focus point and plane for Windows Holographic image stabilization. To take advantage of this 
+// This implementation can also use automatic depth-based image stabilization. This feature determines a
+// best-fit plane for the scene geometry by processing geometry data from the depth buffer, and then sets
+// the focus point and plane for Windows Holographic image stabilization. To take advantage of this
 // feature, make sure to apply the following rules when drawing content:
 //   * All information in the depth buffer should be for hologram geometry that is visible
 //     to the user.
@@ -468,7 +468,7 @@ HRESULT HolographicNativeWindow::getPreferredDeviceFeatureSupport()
     // Check for device support for the optional feature that allows setting the render target array index from the vertex shader stage.
     D3D11_FEATURE_DATA_D3D11_OPTIONS3 options;
     HRESULT hr = mPreferredD3DDevice->CheckFeatureSupport(D3D11_FEATURE_D3D11_OPTIONS3, &options, sizeof(options));
-    
+
     if (SUCCEEDED(hr))
     {
         if (options.VPAndRTArrayIndexFromAnyShaderFeedingRasterizer)
@@ -612,10 +612,10 @@ HRESULT HolographicNativeWindow::UpdateHolographicResources()
             return E_UNEXPECTED;
         }
     }
-    
+
     ComPtr<ABI::Windows::Graphics::Holographic::IHolographicFrame> holographicFrame;
     HRESULT hr = mHolographicSpace->CreateNextFrame(holographicFrame.GetAddressOf());
-    
+
     if (SUCCEEDED(hr))
     {
         mHolographicFrame = holographicFrame;

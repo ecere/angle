@@ -314,16 +314,16 @@ egl::Error SurfaceD3D::swapRect(EGLint x, EGLint y, EGLint width, EGLint height)
 #ifdef ANGLE_ENABLE_WINDOWS_HOLOGRAPHIC
         if (mNativeWindow.isHolographic())
         {
-            // An error was encountered. In this case, we don't have a swap chain to 
+            // An error was encountered. In this case, we don't have a swap chain to
             // present, and that is normally where the holographic native window would
             // be reset in preparation of acquiring a new holographic frame next time
-            // the holographic FBO is cleared. So, we reset it here instead to ensure 
+            // the holographic FBO is cleared. So, we reset it here instead to ensure
             // that the next frame is still going to be acquired.
             HolographicNativeWindow* holographicNativeWindow = reinterpret_cast<HolographicNativeWindow*>(mNativeWindow.GetImpl());
             holographicNativeWindow->ResetFrame();
         }
 #endif
-        return egl::Error(EGL_SUCCESS);
+        //return egl::Error(EGL_SUCCESS);
     }
 
     if (x + width > mWidth)
@@ -378,7 +378,7 @@ bool SurfaceD3D::checkForOutOfDateSwapChain()
     RECT client;
     int clientWidth = getWidth();
     int clientHeight = getHeight();
-    bool sizeDirty = false;    
+    bool sizeDirty = false;
 #ifndef ANGLE_ENABLE_WINDOWS_HOLOGRAPHIC
     if (!mFixedSize && !mNativeWindow.isIconic())
 #else
@@ -481,7 +481,7 @@ gl::Error SurfaceD3D::getAttachmentRenderTarget(const gl::FramebufferAttachment:
 #ifdef ANGLE_ENABLE_WINDOWS_HOLOGRAPHIC
     // In holographic mode, the swap chain is provided by the system via a HolographicCamera.
     HRESULT hr = S_OK;
-        
+
     // Create/upkeep the holographic swap chain
     if (mNativeWindow.isHolographic())
     {
@@ -508,7 +508,7 @@ gl::Error SurfaceD3D::getAttachmentRenderTarget(const gl::FramebufferAttachment:
                     {
                         if (i++ == 0)
                         {
-                            // For now, we make the first holographic camera the "primary" 
+                            // For now, we make the first holographic camera the "primary"
                             // swap chain.
                             mSwapChain = swapChain;
                         }

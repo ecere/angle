@@ -126,7 +126,7 @@ void HolographicSwapChain11::release()
     // Release references to the back buffer
     mBackBufferRTView.Reset();
     mBackBufferSRView.Reset();
-    
+
     // Force the back buffer to be released entirely
     mBackBufferTexture.Reset();
 
@@ -281,7 +281,7 @@ EGLint HolographicSwapChain11::resetOffscreenDepthBuffer(int backbufferWidth, in
                 DXGI_FORMAT_R16_UNORM,
                 0,
                 numPixels);
-            
+
             if (SUCCEEDED(result))
             {
                 result = device->CreateUnorderedAccessView(
@@ -300,23 +300,23 @@ EGLint HolographicSwapChain11::resetOffscreenDepthBuffer(int backbufferWidth, in
                 0,
                 0,
                 structureByteStride);
-            
+
             if (SUCCEEDED(result))
             {
                 result = device->CreateBuffer(&depthResolvedDesc, nullptr, &mResolvedDepthBuffer);
             }
-            
+
             CD3D11_UNORDERED_ACCESS_VIEW_DESC depthResolvedUAVDesc(
                 D3D11_UAV_DIMENSION_BUFFER,
                 DXGI_FORMAT_R16_UNORM,
                 0,
                 numPixels);
-            
+
             if (SUCCEEDED(result))
             {
                 result = device->CreateUnorderedAccessView(
-                    mResolvedDepthBuffer, 
-                    &depthResolvedUAVDesc, 
+                    mResolvedDepthBuffer,
+                    &depthResolvedUAVDesc,
                     &mResolvedDepthView);
             }
 
@@ -327,12 +327,12 @@ EGLint HolographicSwapChain11::resetOffscreenDepthBuffer(int backbufferWidth, in
                 D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE,
                 0,
                 structureByteStride);
-            
+
             if (SUCCEEDED(result))
             {
                 result = device->CreateBuffer(
-                    &depthResolvedCPUDesc, 
-                    nullptr, 
+                    &depthResolvedCPUDesc,
+                    nullptr,
                     &mCPUResolvedDepthTexture);
             }
         }
@@ -373,7 +373,7 @@ void HolographicSwapChain11::ComputeMidViewMatrix(
 
     XMVECTOR rightScale, rightRotationQuat, rightTranslation;
     success = success && XMMatrixDecompose(&rightScale, &rightRotationQuat, &rightTranslation, right);
-    
+
     // Only proceed if the decomposition was successful.
     if (success)
     {
@@ -387,9 +387,9 @@ void HolographicSwapChain11::ComputeMidViewMatrix(
         const XMVECTOR resultRotationQuat = XMQuaternionSlerp(leftRotationQuat, rightRotationQuat, 0.5f);
 
         // Compose the result transform.
-        auto midViewMatrix = 
-            XMMatrixScalingFromVector(resultScale) * 
-            XMMatrixRotationQuaternion(resultRotationQuat) * 
+        auto midViewMatrix =
+            XMMatrixScalingFromVector(resultScale) *
+            XMMatrixRotationQuaternion(resultRotationQuat) *
             XMMatrixTranslationFromVector(resultTranslation);
 
         // Store the result transform.
@@ -524,7 +524,7 @@ EGLint HolographicSwapChain11::updateHolographicRenderingParameters(
             }
 
             // A new depth stencil view is also needed.
-            return resetOffscreenBuffers(
+            result = /*return*/ resetOffscreenBuffers(
                 static_cast<EGLint>(mRenderTargetSize.Width),
                 static_cast<EGLint>(mRenderTargetSize.Height));
         }
@@ -533,7 +533,7 @@ EGLint HolographicSwapChain11::updateHolographicRenderingParameters(
     // Update holographic view/projection matrices.
     if (SUCCEEDED(result))
     {
-        ComPtr<ABI::Windows::Perception::Spatial::ISpatialCoordinateSystem> spCoordinateSystem = 
+        ComPtr<ABI::Windows::Perception::Spatial::ISpatialCoordinateSystem> spCoordinateSystem =
             mHolographicNativeWindow->GetCoordinateSystem();
 
         if (spCoordinateSystem != nullptr)
@@ -567,7 +567,7 @@ EGLint HolographicSwapChain11::updateHolographicRenderingParameters(
                 DirectX::XMFLOAT4X4 viewProj[2];
                 DirectX::XMStoreFloat4x4(
                     &viewProj[0],
-                    DirectX::XMLoadFloat4x4(reinterpret_cast<DirectX::XMFLOAT4X4*>(&viewTransform.Left)) * 
+                    DirectX::XMLoadFloat4x4(reinterpret_cast<DirectX::XMFLOAT4X4*>(&viewTransform.Left)) *
                     DirectX::XMLoadFloat4x4(reinterpret_cast<DirectX::XMFLOAT4X4*>(&projectionTransform.Left))
                 );
                 DirectX::XMStoreFloat4x4(
@@ -579,14 +579,14 @@ EGLint HolographicSwapChain11::updateHolographicRenderingParameters(
                 // get view matrix
                 const auto leftViewMatrix = DirectX::XMLoadFloat4x4(reinterpret_cast<DirectX::XMFLOAT4X4*>(&viewTransform.Left));
                 const auto rightViewMatrix = DirectX::XMLoadFloat4x4(reinterpret_cast<DirectX::XMFLOAT4X4*>(&viewTransform.Right));
-                
+
                 // interpolate view matrix
                 if (mHolographicCameraId == 0)
                 {
                     ComputeMidViewMatrix(leftViewMatrix, rightViewMatrix);
                 }
-                
-                // TODO: The display was being mirrored, so for now we hack these values to 
+
+                // TODO: The display was being mirrored, so for now we hack these values to
                 //       negative as far as the app is concerned.
                 viewTransform.Left.M11 = -viewTransform.Left.M11;
                 viewTransform.Left.M12 = -viewTransform.Left.M12;
@@ -608,7 +608,7 @@ EGLint HolographicSwapChain11::updateHolographicRenderingParameters(
                     &view[1],
                     DirectX::XMLoadFloat4x4(reinterpret_cast<DirectX::XMFLOAT4X4*>(&viewTransform.Right))
                 );
-                
+
                 // invert view matrix
                 XMVECTOR determinant;
                 auto leftViewInverse = XMMatrixInverse(&determinant, leftViewMatrix);
@@ -784,7 +784,7 @@ EGLint HolographicSwapChain11::reset(int backbufferWidth, int backbufferHeight, 
             );
         }
     }
-    
+
     HRESULT hr = S_OK;
 
     ComPtr<ABI::Windows::Graphics::Holographic::IHolographicCameraRenderingParameters> spParameters;
@@ -797,7 +797,7 @@ EGLint HolographicSwapChain11::reset(int backbufferWidth, int backbufferHeight, 
     if (SUCCEEDED(hr))
     {
         EGLint result = updateHolographicRenderingParameters(spParameters);
-            
+
         if (result != EGL_SUCCESS)
         {
             return result;
@@ -837,7 +837,7 @@ EGLint HolographicSwapChain11::swapRect(IHolographicFrame* pHolographicFrame)
 
 // This function uses the depth buffer for the first holographic camera to determine a best-
 // fit plane for the scene geometry. It uses that plane, and a projected position, to set up
-// the focus point and plane for Windows Holographic image stabilization. To take advantage 
+// the focus point and plane for Windows Holographic image stabilization. To take advantage
 // of this feature, make sure to apply the following rules when drawing content:
 //   * All information in the depth buffer should be for hologram geometry that is visible
 //     to the user.
@@ -861,15 +861,15 @@ void HolographicSwapChain11::SetStabilizationPlane(IHolographicFrame* pFrame)
     float distanceToPointInMeters = 2.0f - mNearPlaneDistance;
     assert(mDepthBufferPlaneFinder != nullptr);
     const bool estimationSuccess = mDepthBufferPlaneFinder->TryFindPlaneNormalAndDistance(
-        this, 
-        planeNormalInCameraSpace, 
+        this,
+        planeNormalInCameraSpace,
         distanceToPointInMeters);
 
 //#define ENABLE_DEBUG_OUTPUT
 #ifdef ENABLE_DEBUG_OUTPUT
     OutputDebugStringA((
-        "Distance from near plane to point: " + 
-        std::to_string(distanceToPointInMeters) + 
+        "Distance from near plane to point: " +
+        std::to_string(distanceToPointInMeters) +
         "\n").c_str());
 #endif
 
@@ -897,7 +897,7 @@ void HolographicSwapChain11::SetStabilizationPlane(IHolographicFrame* pFrame)
             planeNormalInWorldSpace4.z
         };
 
-        ComPtr<ABI::Windows::Perception::Spatial::ISpatialCoordinateSystem> spCoordinateSystem = 
+        ComPtr<ABI::Windows::Perception::Spatial::ISpatialCoordinateSystem> spCoordinateSystem =
             mHolographicNativeWindow->GetCoordinateSystem();
 
         // Set the focus point for the current camera.
@@ -936,7 +936,7 @@ EGLint HolographicSwapChain11::present(IHolographicFrame* pFrame)
                 HolographicFramePresentWaitBehavior_WaitForFrameToFinish :
                 HolographicFramePresentWaitBehavior_DoNotWaitForFrameToFinish,
             &presentResult);
-    
+
     if (SUCCEEDED(result))
     {
         // Some swapping mechanisms such as DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL unbind the current render

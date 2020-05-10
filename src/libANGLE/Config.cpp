@@ -271,7 +271,8 @@ std::vector<const Config*> ConfigSet::filter(const AttributeMap &attributeMap) c
     }
 
     // Sort the result
-    std::sort(result.begin(), result.end(), ConfigSorter(attributeMap));
+    // TOCHECK: Was this crashing?
+    //std::sort(result.begin(), result.end(), ConfigSorter(attributeMap));
 
     return result;
 }

@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -12,6 +16,10 @@
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -35,8 +43,8 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.10586.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <ApplicationType>Windows Store</ApplicationType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -44,7 +52,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Label="Locals">
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
@@ -60,9 +68,11 @@
     <IntDir>$(OutDir)obj\$(ProjectName)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <TargetName>$(ProjectName)</TargetName>
     <TargetPath>$(OutDir)\$(ProjectName)$(TargetExt)</TargetPath>
@@ -73,7 +83,7 @@
       <AdditionalOptions>/MP /d2guard4 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
-      <CompileAsWinRT>false</CompileAsWinRT>
+      <CompileAsWinRT>true</CompileAsWinRT>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4100;4127;4702;4718;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
@@ -86,6 +96,7 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <TreatWarningAsError>true</TreatWarningAsError>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX86</TargetMachine>
@@ -117,7 +128,7 @@
       <AdditionalOptions>/MP /d2guard4 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
-      <CompileAsWinRT>false</CompileAsWinRT>
+      <CompileAsWinRT>true</CompileAsWinRT>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4100;4127;4702;4718;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
@@ -130,6 +141,7 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <TreatWarningAsError>true</TreatWarningAsError>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineARM</TargetMachine>
@@ -155,13 +167,13 @@
       <PreprocessorDefinitions>LIBGLESV2_IMPLEMENTATION;ANGLE_STANDALONE_BUILD;GL_GLEXT_PROTOTYPES;ANGLE_PRELOADED_D3DCOMPILER_MODULE_NAMES={ "d3dcompiler_47.dll", "d3dcompiler_46.dll", "d3dcompiler_43.dll" };GL_APICALL=;EGLAPI=;ANGLE_ENABLE_D3D11;_DEBUG;ANGLE_ENABLE_DEBUG_ANNOTATIONS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(OutDir)obj\global_intermediate\angle;..\..\..\src;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /d2guard4 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
-      <CompileAsWinRT>false</CompileAsWinRT>
+      <CompileAsWinRT>true</CompileAsWinRT>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4100;4127;4702;4718;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
@@ -174,6 +186,51 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <TreatWarningAsError>true</TreatWarningAsError>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+    </ClCompile>
+    <Lib>
+      <TargetMachine>MachineARM</TargetMachine>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies);uuid.lib;dxguid.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib</AdditionalDependencies>
+      <AdditionalOptions>/guard:cf %(AdditionalOptions)</AdditionalOptions>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(OutDir)lib\$(TargetName).lib</ImportLibrary>
+      <MapFileName>$(OutDir)$(TargetName).map</MapFileName>
+      <ModuleDefinitionFile>..\..\..\src\libGLESv2\libGLESv2.def</ModuleDefinitionFile>
+      <OptimizeReferences>false</OptimizeReferences>
+      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+      <SubSystem>Console</SubSystem>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(OutDir)obj\global_intermediate\angle;..\..\..\src;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>LIBGLESV2_IMPLEMENTATION;ANGLE_STANDALONE_BUILD;GL_GLEXT_PROTOTYPES;ANGLE_PRELOADED_D3DCOMPILER_MODULE_NAMES={ "d3dcompiler_47.dll", "d3dcompiler_46.dll", "d3dcompiler_43.dll" };GL_APICALL=;EGLAPI=;ANGLE_ENABLE_D3D11;_DEBUG;ANGLE_ENABLE_DEBUG_ANNOTATIONS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(OutDir)obj\global_intermediate\angle;..\..\..\src;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP /d2guard4 %(AdditionalOptions)</AdditionalOptions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4100;4127;4702;4718;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MinimalRebuild>false</MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;NOMINMAX;LIBGLESV2_IMPLEMENTATION;ANGLE_STANDALONE_BUILD;GL_GLEXT_PROTOTYPES;ANGLE_PRELOADED_D3DCOMPILER_MODULE_NAMES={ "d3dcompiler_47.dll", "d3dcompiler_46.dll", "d3dcompiler_43.dll" };GL_APICALL=;EGLAPI=;ANGLE_ENABLE_D3D11;_DEBUG;ANGLE_ENABLE_DEBUG_ANNOTATIONS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
@@ -279,6 +336,49 @@
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineARM</TargetMachine>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(OutDir)obj\global_intermediate\angle;..\..\..\src;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>LIBGLESV2_IMPLEMENTATION;ANGLE_STANDALONE_BUILD;GL_GLEXT_PROTOTYPES;ANGLE_PRELOADED_D3DCOMPILER_MODULE_NAMES={ "d3dcompiler_47.dll", "d3dcompiler_46.dll", "d3dcompiler_43.dll" };GL_APICALL=;EGLAPI=;ANGLE_ENABLE_D3D11;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(OutDir)obj\global_intermediate\angle;..\..\..\src;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP /d2guard4 %(AdditionalOptions)</AdditionalOptions>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4100;4127;4702;4718;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MinimalRebuild>false</MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;NOMINMAX;LIBGLESV2_IMPLEMENTATION;ANGLE_STANDALONE_BUILD;GL_GLEXT_PROTOTYPES;ANGLE_PRELOADED_D3DCOMPILER_MODULE_NAMES={ "d3dcompiler_47.dll", "d3dcompiler_46.dll", "d3dcompiler_43.dll" };GL_APICALL=;EGLAPI=;ANGLE_ENABLE_D3D11;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Lib>
+      <TargetMachine>MachineARM</TargetMachine>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies);uuid.lib;dxguid.lib;d3d11.lib;d3dcompiler.lib</AdditionalDependencies>
+      <AdditionalOptions>/guard:cf /cgthreads:8 %(AdditionalOptions)</AdditionalOptions>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(OutDir)lib\$(TargetName).lib</ImportLibrary>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <MapFileName>$(OutDir)$(TargetName).map</MapFileName>
+      <ModuleDefinitionFile>..\..\..\src\libGLESv2\libGLESv2.def</ModuleDefinitionFile>
+      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+      <SubSystem>Console</SubSystem>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <ResourceCompile>

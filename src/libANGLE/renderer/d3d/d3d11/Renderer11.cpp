@@ -844,7 +844,7 @@ egl::Error Renderer11::initializeD3DDevice()
                 static_cast<unsigned int>(mAvailableFeatureLevels.size()),
                 D3D11_SDK_VERSION, &mDevice,
                 &(mRenderer11DeviceCaps.featureLevel), &mDeviceContext);
-            
+
             // Cleanup done by destructor
             if (!mDevice || FAILED(result))
             {
@@ -2013,11 +2013,11 @@ gl::Error Renderer11::drawInstancedToCamerasIfHolographic(
         {
             return gl::Error(GL_NO_ERROR);
         }
-        
+
 #ifdef ANGLE_ENABLE_WINDOWS_HOLOGRAPHIC
         if (renderTarget11->isHolographic())
         {
-            // For Windows Holographic, we repeat the draw call for each of the holographic cameras that 
+            // For Windows Holographic, we repeat the draw call for each of the holographic cameras that
             // are provided by the system.
 
             // Note that system view and projection matrices will be applied to each camera; the
@@ -2028,8 +2028,8 @@ gl::Error Renderer11::drawInstancedToCamerasIfHolographic(
             // Acquire the holographic native window.
             HolographicSwapChain11* holographicSwapChain11 = renderTarget11->getHolographicSwapChain11();
             auto holographicNativeWindow = holographicSwapChain11->getHolographicNativeWindow();
-            
-            // For each active camera ID, set the viewport, view and projection matrics, and render target 
+
+            // For each active camera ID, set the viewport, view and projection matrics, and render target
             // and draw in stereo using an instanced draw call.
             for each (auto const& cameraId in holographicNativeWindow->GetCameraIds())
             {
@@ -2056,7 +2056,7 @@ gl::Error Renderer11::drawInstancedToCamerasIfHolographic(
                     mDeviceContext->DrawIndexedInstanced(count, instances, 0, baseVertexLocation, 0);
                 }
             }
-            
+
             // Note that the viewport in mStateManager cannot be read back, so we do not
             // bother resetting it to what it was before we looped over the holographic
             // cameras.
@@ -2352,7 +2352,7 @@ gl::Error Renderer11::applyShadersImpl(const gl::Data &data, GLenum drawMode)
 #ifdef ANGLE_ENABLE_WINDOWS_HOLOGRAPHIC
     // On devices that support setting the render target array index from any shader stage, we
     // can use a more optimal shader pipeline.
-    // In this pipeline, we can eliminate the geometry shader stage - which is normally required 
+    // In this pipeline, we can eliminate the geometry shader stage - which is normally required
     // to set the render target array index. Avoiding the extra pipeline stage eliminates a step
     // in the rendering pipeline, and it may also allow the graphics driver to better optimize for
     // the draw call.
@@ -3477,9 +3477,9 @@ gl::Error Renderer11::loadExecutable(const void *function,
             }
             catch (_com_error /*err*/)
             {
-                // The shader that uses the optional Direct3D 11.3 feature to set the render 
-                // target array index from any shader stage will always fail to compile on 
-                // machines that don't support the optional Direct3D 11.3 feature to set the 
+                // The shader that uses the optional Direct3D 11.3 feature to set the render
+                // target array index from any shader stage will always fail to compile on
+                // machines that don't support the optional Direct3D 11.3 feature to set the
                 // render target array index.
                 // So, we do not assert here - instead, we catch a COM exception and return an
                 // error that indicates to the calling class that it should use the geometry
@@ -3489,7 +3489,7 @@ gl::Error Renderer11::loadExecutable(const void *function,
             }
 #else
             HRESULT result = mDevice->CreateVertexShader(function, length, NULL, &vertexShader);
-            ASSERT(SUCCEEDED(result)); 
+            ASSERT(SUCCEEDED(result));
 #endif
             if (FAILED(result))
             {

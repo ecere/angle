@@ -265,7 +265,7 @@ void Shader::compile(Compiler *compiler)
 #ifdef ANGLE_ENABLE_WINDOWS_HOLOGRAPHIC
     if (rx::HolographicNativeWindow::IsInitialized() && rx::HolographicSwapChain11::getIsAutomaticStereoRenderingEnabled())
     {
-        // On Windows Holographic, update the shader version to 3, if it is less than that, and 
+        // On Windows Holographic, update the shader version to 3, if it is less than that, and
         // apply our stereo instancing modification - which requires gl_InstanceID, which is only
         // available on shader version 3 or higher.
         bool isGlslesVersion3 = false;
@@ -294,14 +294,14 @@ void Shader::compile(Compiler *compiler)
                 }
                 sourceString = modifiedSourceString;
             }
-        
+
             std::string firstStringAlwaysStart = "#version 3";
             std::string firstStringAlwaysEnd = "\n";
             size_t index0 = sourceString.find(firstStringAlwaysStart);
             size_t index1 = sourceString.find(firstStringAlwaysEnd, index0 + 1) + firstStringAlwaysEnd.size();
             size_t index2 = sourceString.find_last_of('}');
-            std::string modifiedSourceString = 
-                sourceString.substr(0, index1) + 
+            std::string modifiedSourceString =
+                sourceString.substr(0, index1) +
                 "uniform mat4 uHolographicViewMatrix[2];\n uniform mat4 uHolographicProjectionMatrix[2];\n uniform mat4 uHolographicViewProjectionMatrix[2];\n uniform mat4 uUndoMidViewMatrix;\n out float vRenderTargetArrayIndex;\n " +
                 sourceString.substr(index1, index2-index1) +
                 " int index = gl_InstanceIDUnmodified - (gl_InstanceID*2);\n vRenderTargetArrayIndex = float(index);\n gl_Position = uHolographicProjectionMatrix[index] * uHolographicViewMatrix[index] * uUndoMidViewMatrix * gl_Position;\n " +
@@ -315,8 +315,8 @@ void Shader::compile(Compiler *compiler)
             if (!isGlslesVersion3)
             {
                 // Translate the shader to GLSL version 300 syntax.
-                std::string modifiedSourceString = 
-                    std::string("#version 300 es\n ") + 
+                std::string modifiedSourceString =
+                    std::string("#version 300 es\n ") +
                     "precision mediump float;\n " +
                     sourceString;
                 size_t varyingPos = 0;
@@ -345,8 +345,8 @@ void Shader::compile(Compiler *compiler)
 
             size_t index1 = sourceString.find("void");
             size_t index2 = sourceString.find_last_of('}');
-            std::string modifiedSourceString = 
-                sourceString.substr(0, index1) + 
+            std::string modifiedSourceString =
+                sourceString.substr(0, index1) +
                 (!isGlslesVersion3 ? "out vec4 fragColor;\n " : "") +
                 "in float vRenderTargetArrayIndex;\n " +
                 sourceString.substr(index1, index2-index1) +

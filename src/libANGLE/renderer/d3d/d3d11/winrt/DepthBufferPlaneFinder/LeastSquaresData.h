@@ -27,9 +27,10 @@ namespace HolographicDepthBasedImageStabilization
         double sumWeights   = 0;
     };
 }
-
+#if !defined(_M_ARM64)
 inline float __vectorcall VectorHorizontalSum(__m128 x)
 {
     __m128 temp = _mm_hadd_ps(x, x);
     return _mm_cvtss_f32(_mm_hadd_ps(temp, temp));
 }
+#endif

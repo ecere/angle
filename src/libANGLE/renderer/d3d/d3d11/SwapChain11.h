@@ -29,7 +29,7 @@ class SwapChain11 : public SwapChainD3D
     virtual ~SwapChain11();
 
     EGLint resize(EGLint backbufferWidth, EGLint backbufferHeight);
-    virtual EGLint reset(EGLint backbufferWidth, EGLint backbufferHeight, EGLint swapInterval);
+    virtual EGLint reset(int backbufferWidth, int backbufferHeight, EGLint swapInterval);
     virtual EGLint swapRect(EGLint x, EGLint y, EGLint width, EGLint height);
     virtual void recreate();
 

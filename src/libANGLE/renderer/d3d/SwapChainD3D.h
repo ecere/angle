@@ -38,7 +38,7 @@ class SwapChainD3D : angle::NonCopyable
     virtual ~SwapChainD3D() {};
 
     virtual EGLint resize(EGLint backbufferWidth, EGLint backbufferSize) = 0;
-    virtual EGLint reset(EGLint backbufferWidth, EGLint backbufferHeight, EGLint swapInterval) = 0;
+    virtual EGLint reset(int backbufferWidth, int backbufferHeight, EGLint swapInterval) = 0;
     virtual EGLint swapRect(EGLint x, EGLint y, EGLint width, EGLint height) = 0;
     virtual void recreate() = 0;
 

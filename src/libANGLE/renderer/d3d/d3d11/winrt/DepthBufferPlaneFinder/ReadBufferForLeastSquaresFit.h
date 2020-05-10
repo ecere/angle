@@ -36,6 +36,7 @@ namespace HolographicDepthBasedImageStabilization {
         unsigned int const& outHeight,
         unsigned short const& invalidDepthValue)
     {
+#if !defined(_M_ARM) && !defined(_M_ARM64)
         using namespace DirectX;
 
         uint16_t* depthRow = reinterpret_cast<uint16_t*>(pData);
@@ -124,5 +125,6 @@ namespace HolographicDepthBasedImageStabilization {
         
             depthRow = reinterpret_cast<uint16_t*>(reinterpret_cast<byte*>(depthRow) + rowPitch);
         }
+#endif
     }
 }
